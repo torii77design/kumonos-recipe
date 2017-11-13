@@ -1,29 +1,20 @@
-module.exports = {
-  context: __dirname,
-  entry: {
-    jsx: "./src/index.jsx",
-    css: "./src/main.css",
-    html: "./src/index.html",
-  },
+// webpack.config.js
+var path = require('path');
+var webpack = require('webpack');
 
-  output: {
-    path: __dirname + "/static",
-    filename: "bundle.js",
-  },
+module.exports = {
+  entry: './src/main.jsx',
+  output: { path: path.join(__dirname, 'dist'), filename: 'bundle.js' },
   module: {
-    preLoaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: "eslint-loader"},
-    ],
     loaders: [
-      { test: /\.html$/, loader: "file?name=[name].[ext]" },
-      { test: /\.css$/, loader: "file?name=[name].[ext]" },
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot","babel"]},
-    ],
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
-  eslint: {
-    configFile: './.eslintrc'
-  },
-};
+      {
+        test: /.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      }
+    ]
+  }
+}
